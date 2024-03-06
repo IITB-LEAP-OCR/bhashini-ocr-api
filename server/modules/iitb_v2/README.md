@@ -22,8 +22,8 @@ Where,
 
 ## Note
 - Refer to the README in the docker- repo directory for instructions on dockerization.
-- Update the IMAGE_FOLDER, MODEL_FOLDER, LOGS_FOLDER ,DOCKER_NAME, models_txt_path in config.py
-- URLs added in ocr-api: /ocr/iitb/v2/
+- Update the MODEL_FOLDER ,DOCKER_NAME, models_txt_path in config.py
+- URLs added in ocr-api: /api/0.0.1/word/ocr
 
 ## Sample Request
 ```
@@ -51,5 +51,5 @@ Where,
 ```
 
 ## Author
-- Name: Margamitra and Shourya Tyagi
+- Name: Shourya Tyagi
 - Email: shouryatyagi222@gmail.com
