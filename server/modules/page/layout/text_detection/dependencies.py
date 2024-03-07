@@ -5,7 +5,7 @@ from typing import List
 
 from fastapi import UploadFile
 
-from ..config import IMAGE_FOLDER
+from ....config import IMAGE_FOLDER
 
 
 def save_uploaded_images(images: List[UploadFile]) -> str:

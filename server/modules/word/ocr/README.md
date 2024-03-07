@@ -44,9 +44,30 @@ Where,
                 "targetLanguageName": null
             }
         ],
-        "detectionLevel": "page",
+        "detectionLevel": "word",
         "modality": "handwritten"
     }
+}
+```
+## Output 
+```
+{
+  "output": [
+    {
+      "source": "०",
+      "target": "hi"
+    }
+  ],
+  "config": {
+    "detectionLevel": "page",
+    "modality": "handwritten",
+    "languages": [
+      {
+        "sourceLanguageName": "hindi",
+        "sourceLanguage": "hi"
+      }
+    ]
+  }
 }
 ```
 

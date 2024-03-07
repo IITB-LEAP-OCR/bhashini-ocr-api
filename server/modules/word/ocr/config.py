@@ -1,4 +1,4 @@
-from ..config import IMAGE_FOLDER
+from ...config import IMAGE_FOLDER
 import os
 
 MODEL_FOLDER='/media/shourya/B018CE3C18CE0178/IITB_OCR/temp_models'
