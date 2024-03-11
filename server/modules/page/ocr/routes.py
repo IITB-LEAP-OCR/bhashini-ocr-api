@@ -4,6 +4,6 @@ router = APIRouter(
     prefix="/ocr"
 )
 
-@router.get("/test")
-async def test():
-    return "Tested"
+# @router.get("/test")
+# async def test():
+#     return "Working"
