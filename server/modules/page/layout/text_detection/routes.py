@@ -17,7 +17,7 @@ router = APIRouter(
 
 
 @router.post('/', response_model=List[LayoutImageResponse])
-async def doctr_layout_parser(
+async def layout_parser(
 	folder_path: str = Depends(save_uploaded_images),
 	model: ModelChoice = Form(ModelChoice.textron),
 ):

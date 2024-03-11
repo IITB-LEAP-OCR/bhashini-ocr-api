@@ -14,7 +14,7 @@ from .models import LayoutImageResponse, ModelChoice
 
 router = APIRouter(
 	prefix='/ocr/0.0.1/page/layout',
-	tags=['table'],
+	tags=['Table Detection'],
 )
 
 @router.post('/table', response_model=None)

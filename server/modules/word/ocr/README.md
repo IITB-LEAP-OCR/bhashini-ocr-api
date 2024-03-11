@@ -30,7 +30,7 @@ Where,
 {
     "image": [
         {
-            "imageUri": "https://miro.medium.com/v2/resize:fit:640/format:webp/1*dggnQA_B-mJTP8I-abv6ag.png",
+            "imageUri": "https://bhasha.iiit.ac.in/bhashini-iiith/static/ulca_examples/hindi_word_image3.jpg",
             "imageContent": null
         }
     ],
@@ -54,7 +54,7 @@ Where,
 {
   "output": [
     {
-      "source": "०",
+      "source": "पर",
       "target": "hi"
     }
   ],
