@@ -12,7 +12,7 @@ from os.path import join
 import torch
 from fastapi import UploadFile
 
-from ....config import IMAGE_FOLDER
+from ...config import IMAGE_FOLDER
 from .models import *
 from .config import *
 

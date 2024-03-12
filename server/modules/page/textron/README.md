@@ -1,5 +1,5 @@
 # Textron
-
+The module to Detect text from the page level image using textron.
 ## Load from Docker Hub
 ```
 docker pull shouryatyagi222/textron:1

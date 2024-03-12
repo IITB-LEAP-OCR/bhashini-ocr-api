@@ -5,8 +5,8 @@ from fastapi import Depends, FastAPI, Form, Request, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 
 from .modules.word.ocr.routes import router as iitb_v2_router
-from .modules.page.layout.text_detection.routes import router as text_detection_routes
-from .modules.page.layout.table.routes import router as table_router
+from .modules.page.textron.routes import router as text_detection_routes
+from .modules.page.table.routes import router as table_router
 
 app = FastAPI(
 	title='BHASHINI OCR API',

@@ -8,7 +8,7 @@ from fastapi.responses import FileResponse
 from .dependencies import save_uploaded_images
 from .models import *
 from .helper import *
-from ....config import *
+from ...config import *
 
 router = APIRouter(
 	prefix='/api/0.0.1/page/layout/text/word',
