@@ -7,7 +7,7 @@ from fastapi import APIRouter, UploadFile
 from fastapi.responses import JSONResponse
 from tempfile import TemporaryDirectory
 
-from server.modules.page.layout_detection.helpers import save_uploaded_images
+from server.modules.page.layout.helpers import save_uploaded_images
 
 router = APIRouter(
 	prefix='/layout'
@@ -41,6 +41,12 @@ async def detect_table(images: List[UploadFile]):
     return JSONResponse(content={"message": "Table Detection Successful", "layout": {"tables": tables, "cells": cells}})
 
 
+
+
+
+
+
+"""
 
 @router.post("/graphics/equation")
 async def detect_equation(images: List[UploadFile]):
@@ -92,3 +98,6 @@ async def detect_figure(images: List[UploadFile]):
     figures = out.get("figures", [])
 
     return JSONResponse(content={"message": "Figure Detection Successful", "layout": {"figures": figures}})
+
+
+"""
