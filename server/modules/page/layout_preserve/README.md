@@ -8,7 +8,7 @@ An endpoint to return the OCR of an image has been integrated to the code. This 
 
 Created a module server/modules/page/layout_preserve to have the endpoint for layout preservation.
 
-**Layout preservation endpoint - /ocr/layout-preserve/lpo**
+**Layout preservation endpoint - page/ocr**
 
 **Input:**
 - An image file.
@@ -45,9 +45,9 @@ Created a module server/modules/page/layout_preserve to have the endpoint for la
 ### models.py
 - The purpose of this code is to define a clear and structured data model `OCRResponse` for representing the output of the OCR operation.
 
-In modules/page/__init__.py line 12 imported router from routes.py of the layout_preserve.
+In modules/page/__init__.py line 10 imported router from routes.py of the layout_preserve.
 
-In app.py line 38 imported router of page.
+In app.py line 23 imported router of page.
 
 ### Requirements
 
