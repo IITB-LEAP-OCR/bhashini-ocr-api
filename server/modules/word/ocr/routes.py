@@ -8,8 +8,7 @@ from .models import OCRRequest, OCRResponse
 from .config import *
 
 router = APIRouter(
-	prefix='/api/0.0.1/word',
-	tags=['IITB Models'],
+    prefix=''
 )
 
 @router.post(

@@ -11,10 +11,8 @@ from .helper import *
 from ...config import *
 
 router = APIRouter(
-	prefix='/api/0.0.1/page/layout/text/word',
-	tags=['Text Detection'],
+    prefix="/text/word"
 )
-
 
 @router.post('/', response_model=List[LayoutImageResponse])
 async def layout_parser(
