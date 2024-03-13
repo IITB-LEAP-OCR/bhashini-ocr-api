@@ -1,9 +1,3 @@
-"""
-OCR API
-
-Author: Krishna Tulsyan (kt.krishna.tulsyan@gmail.com)
-"""
-
 import uvicorn
 
 from server.modules.config import PORT

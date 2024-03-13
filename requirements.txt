@@ -1,7 +1,8 @@
 fastapi
 uvicorn
+python-multipart
+opencv-python
+pillow
 pytz
 requests
-Pillow
-python-multipart
 python-dateutil
