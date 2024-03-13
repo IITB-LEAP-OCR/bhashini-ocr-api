@@ -1,6 +1,6 @@
 # Page Level Atrribute
 
-## Font
+## Style
 
 - Input: Page Image
 - Data Required by model: Image + Bounding Boxes of words

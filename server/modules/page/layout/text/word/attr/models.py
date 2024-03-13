@@ -48,5 +48,3 @@ class FontRegion(BaseModel):
 class FontAttributeImage(BaseModel):
 	image: Optional[str] = Field(description='image name')
 	font_regions: List[FontRegion]
-class FontAttributesResponse(BaseModel):
-	images: List[FontAttributeImage]
