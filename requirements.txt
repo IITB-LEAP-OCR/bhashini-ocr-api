@@ -3,3 +3,6 @@ uvicorn
 python-multipart
 opencv-python
 pillow
+pytz
+requests
+python-dateutil
