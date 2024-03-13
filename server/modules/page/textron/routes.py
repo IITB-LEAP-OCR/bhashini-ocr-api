@@ -15,12 +15,12 @@ router = APIRouter(
 )
 
 @router.post('/', response_model=List[LayoutImageResponse])
-async def layout_parser(
+async def text_detection(
 	folder_path: str = Depends(save_uploaded_images),
 	model: ModelChoice = Form(ModelChoice.textron),
 ):
 	"""
-	API endpoint for calling the layout parser
+	API endpoint for calling the textron text detection
 	"""
 	print(model.value)
 	if model == ModelChoice.textron:
@@ -31,17 +31,13 @@ async def layout_parser(
 
 
 @router.post('/visualize')
-async def layout_parser_swagger_only_demo(
+async def text_detection_visualization(
 	image: UploadFile = File(...),
 	model: ModelChoice = Form(ModelChoice.textron),
 	dilate: bool = Form(False),
 ):
 	"""
-	This endpoint is only used to demonstration purposes.
-	this endpoint returns/displays the input image with the
-	bounding boxes clearly marked in blue rectangles.
-
-	PS: This endpoint is not to be called from outside of swagger
+	API endpoint for calling the textron text detection Visualzation
 	"""
 	image_path = save_uploaded_image(image)
 	if model == ModelChoice.textron:

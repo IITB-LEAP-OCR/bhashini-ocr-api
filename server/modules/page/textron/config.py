@@ -1,1 +1,1 @@
-docker_image_name= "textron"
+docker_image_name= "shouryatyagi222/textron:1"
