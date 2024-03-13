@@ -1,9 +1,11 @@
 from datetime import datetime
 
 from dateutil.tz import gettz
-from fastapi import FastAPI, Request
+from fastapi import Depends, FastAPI, Form, Request, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 
+from .modules.word.ocr.routes import router as iitb_v2_router
+from .modules.page.textron.routes import router as text_detection_routes
 from .modules.page import router as page_level_router
 
 app = FastAPI(
@@ -21,15 +23,14 @@ app.add_middleware(
 )
 
 app.include_router(page_level_router)
-
-
+app.include_router(text_detection_routes)
+app.include_router(iitb_v2_router)
 
 @app.middleware('http')
 async def log_request_timestamp(request: Request, call_next):
 	local_tz = gettz('Asia/Kolkata')
 	print(f'Received request at: {datetime.now(tz=local_tz).isoformat()}')
 	return await call_next(request)
-
 
 @app.get('/ocr/ping', tags=['Testing'])
 def test_server_online():
