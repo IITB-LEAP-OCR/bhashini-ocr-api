@@ -6,7 +6,6 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from .modules.word.ocr.routes import router as iitb_v2_router
 from .modules.page.textron.routes import router as text_detection_routes
-from .modules.page.table.routes import router as table_router
 
 app = FastAPI(
 	title='BHASHINI OCR API',
@@ -38,4 +37,3 @@ app.add_middleware(
 
 app.include_router(text_detection_routes)
 app.include_router(iitb_v2_router)
-app.include_router(table_router)
