@@ -2,9 +2,12 @@ from ...config import IMAGE_FOLDER
 import os
 
 MODEL_FOLDER='/media/shourya/B018CE3C18CE0178/IITB_OCR/temp_models'
-DOCKER_NAME="iitb"
+DOCKER_NAME="iitb-ocr"
 models_txt_path="/media/shourya/B018CE3C18CE0178/IITB_OCR/bhashini-ocr-api/server/modules/iitb_v2/iitb_ocr_models.txt"
 
+if not os.path.exists(MODEL_FOLDER):
+	os.mkdir(MODEL_FOLDER)
+	
 try:
 	if not os.path.exists(IMAGE_FOLDER):
 		os.mkdir(IMAGE_FOLDER)

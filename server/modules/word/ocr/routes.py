@@ -1,4 +1,4 @@
-from subprocess import call
+from subprocess import check_output
 import os
 
 from fastapi import APIRouter, Request
@@ -29,10 +29,12 @@ async def infer_ocr(
 		download_models_from_file(models_txt_path,MODEL_FOLDER)
 
 	if modality=='handwritten':
-		call(f'./infer_iitb_v2.sh {modality} {lcode} {IMAGE_FOLDER} {MODEL_FOLDER} {DOCKER_NAME}', shell=True)
+		check_output(['docker','run','--rm','--net','host','-v',f'{IMAGE_FOLDER}:/data','-v',f'{MODEL_FOLDER}:/models','-v',f'{MODEL_FOLDER}:/root/.cache/doctr/models',DOCKER_NAME,'python','infer.py','-l',lcode,'-t',modality])
+		# call(f'./infer_iitb_v2.sh {modality} {lcode} {IMAGE_FOLDER} {MODEL_FOLDER} {DOCKER_NAME}', shell=True)
 		ret = process_ocr_output(lcode, modality, IMAGE_FOLDER)
 		return ret
 	if modality=='printed':
-		call(f'./infer_iitb_v2.sh {modality} {lcode} {IMAGE_FOLDER} {MODEL_FOLDER} {DOCKER_NAME}', shell=True)
+		check_output(['docker','run','--rm','--net','host','-v',f'{IMAGE_FOLDER}:/data','-v',f'{MODEL_FOLDER}:/models','-v',f'{MODEL_FOLDER}:/root/.cache/doctr/models',DOCKER_NAME,'python','infer.py','-l',lcode,'-t',modality])
+		# call(f'./infer_iitb_v2.sh {modality} {lcode} {IMAGE_FOLDER} {MODEL_FOLDER} {DOCKER_NAME}', shell=True)
 		ret = process_ocr_output(lcode, modality, IMAGE_FOLDER)
 		return ret

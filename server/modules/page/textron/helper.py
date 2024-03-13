@@ -9,7 +9,6 @@ import shutil
 import uuid
 from os.path import join
 
-import torch
 from fastapi import UploadFile
 
 from ...config import IMAGE_FOLDER
@@ -21,10 +20,6 @@ def logtime(t: float, msg:  str) -> None:
 
 t = time.time()
 
-# TODO: remove this line and try to set the env from the docker-compose file.
-os.environ['USE_TORCH'] = '1'
-
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 def save_uploaded_image(image: UploadFile) -> str:
 	"""
