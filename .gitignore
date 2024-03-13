@@ -145,3 +145,4 @@ staticfiles
 # custom files and folders
 images
 .vscode
+.venv/
