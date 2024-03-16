@@ -8,4 +8,4 @@
 - Result: Labeled Bounding Boxes / Visualisation Image
 
 Example:
-![Request Image](examples/font_request.png)
+![Request Image](examples/style_request.png)
