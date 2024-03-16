@@ -7,14 +7,14 @@ from fastapi import APIRouter, UploadFile
 from fastapi.responses import JSONResponse
 from tempfile import TemporaryDirectory
 
-from server.modules.page.layout.helpers import save_uploaded_images
+from .helpers import save_uploaded_images
 
 router = APIRouter(
-	prefix='/layout'
+	prefix='/table'
 )
 
 
-@router.post("/table")
+@router.post("")
 async def detect_table(images: List[UploadFile]):
     temp = TemporaryDirectory()
     image_path = save_uploaded_images(images, temp.name)

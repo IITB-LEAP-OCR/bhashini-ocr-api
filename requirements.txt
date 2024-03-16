@@ -1,8 +1,8 @@
-fastapi
 uvicorn
+fastapi
+python-dateutil
 python-multipart
 opencv-python
 pillow
 pytz
 requests
-python-dateutil
