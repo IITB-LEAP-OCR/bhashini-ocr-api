@@ -1,6 +1,7 @@
 from fastapi import APIRouter
 
 from .attr.routes import router as attr_router
+from .ocr.routes import router as ocr_router
 
 router = APIRouter(
     prefix="/word",
@@ -8,3 +9,4 @@ router = APIRouter(
 )
 
 router.include_router(attr_router)
+router.include_router(ocr_router)
