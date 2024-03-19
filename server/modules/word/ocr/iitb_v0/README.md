@@ -25,51 +25,54 @@ Where,
 - Update the MODEL_FOLDER ,DOCKER_NAME, models_txt_path in config.py
 - URLs added in ocr-api: /api/v0/word/ocr
 
-## Sample Request
+## Examples 
+### Example 1
+#### Request
 ```
 {
-    "image": [
-        {
-            "imageUri": "https://bhasha.iiit.ac.in/bhashini-iiith/static/ulca_examples/hindi_word_image3.jpg",
-            "imageContent": null
-        }
-    ],
-    "config": {
-        "modelId": "your_model_id",
-        "languages": [
-            {
-                "sourceLanguageName": "hindi",
-                "sourceLanguage": "hi",
-                "targetLanguage": null,
-                "targetLanguageName": null
-            }
-        ],
-        "detectionLevel": "word",
-        "modality": "handwritten"
-    }
+	"image": [
+    	{
+        	"imageUri": "https://th.bing.com/th/id/OIP.gQWZ1YqfVq1o20wGHSGMhwHaDt?w=346&h=175&c=7&r=0&o=5&pid=1.7",
+        	"imageContent": null
+    	}
+	],
+	"config": {
+    	"modelId": "your_model_id",
+    	"languages": [
+        	{
+            	"sourceLanguageName": "tamil",
+            	"sourceLanguage": "ta",
+            	"targetLanguage": null,
+            	"targetLanguageName": null
+        	}
+    	],
+    	"detectionLevel": "word",
+    	"modality": "printed"
+	}
 }
 ```
-## Output 
+#### Response
 ```
 {
   "output": [
     {
-      "source": "पर",
-      "target": "hi"
+      "source": "நீரீபீத்தீ",
+      "target": "ta"
     }
   ],
   "config": {
     "detectionLevel": "page",
-    "modality": "handwritten",
+    "modality": "printed",
     "languages": [
       {
-        "sourceLanguageName": "hindi",
-        "sourceLanguage": "hi"
+        "sourceLanguageName": "tamil",
+        "sourceLanguage": "ta"
       }
     ]
   }
 }
 ```
+
 
 ## Author
 - Name: Shourya Tyagi

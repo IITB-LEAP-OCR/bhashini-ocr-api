@@ -12,7 +12,7 @@ router = APIRouter(
 )
 
 @router.post(
-	'/ocr',
+	'/',
 	response_model=OCRResponse,
 	response_model_exclude_none=True
 )
