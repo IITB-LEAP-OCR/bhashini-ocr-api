@@ -2,22 +2,25 @@
 
 ## Description
 
-An endpoint to return the OCR of an image has been integrated to the code. This integration will perform OCR **without the preservation** of the document's layout during the process. Implemented in docker. Processing code repository [here](https://github.com/iitb-research-code/docker-layout-pres-ocr), use to build docker image.
+An endpoint to return the OCR of an image has been integrated to the code. This integration will encompass different classes such as Tables, Equations, Figures, and Text to **ensure the preservation** of the document's layout during the optical character recognition process. Implemented in docker. Processing code repository [here](https://github.com/iitb-research-code/docker-layout-pres-ocr), use to build docker image.
 
 ## API Endpoint and usage
 
-Created a module server/modules/page/iitb_v0_ocr to have the endpoint for layout preservation.
+Created a module server/modules/apps/iitb_v0_ocr to have the endpoint for layout preservation.
 
-**Layout preservation endpoint - page/ocr**
+**Layout preservation endpoint - apps/ocr**
 
 **Input:**
 - An image file.
 - Output set name or document name to be given to final result folder in output directory.
 - Language to perform OCR.
+- Boolean, True if we want to preserve equation in the HOCRs.
+- Boolean, True if we want to preserve figure in the HOCRs.
+- Boolean, True if we want to preserve table in the HOCRs.
 
 
 ***Note:***
-<br> *Table, equation, figure and layout preservation are **all** set to False*
+<br> *If **all three** parameters for detecting tables, equations, and figures are set to False, they will be changed to True. Additionally, the layout preservation will also be set to True. However, if any one or two of these parameters are set to False, they will remain unchanged, while layout preservation will still be set to True, as at least one of the parameters among equations, tables, or figures is set to True.*
 
 ### Example
 
@@ -25,14 +28,14 @@ Created a module server/modules/page/iitb_v0_ocr to have the endpoint for layout
 ![Request](examples/RequestImage.png)
 
 **Response image**
-![Response](examples/bank_02_ResponseImage.png)
+![Response](examples/IBA_Cir_01_ResponseImage.png)
 
 ## Changes Integrated
 ### iitb_v0_ocr module
-- The layout_preserve module has been introduced to centralize the code responsible for performing OCR without preservation of layout elements such as Tables, Equations, Figures, and Text. 
+- The iitb_v0_ocr module has been introduced to centralize the code responsible for detecting and recognizing layout elements, including Tables, Equations, Figures, and Text. 
 
 ### routes.py
-- The endpoint `page/ocr` has been introduced to facilitate layout preservation across various classes within the API.
+- The endpoint `apps/ocr` has been introduced to facilitate layout preservation across various classes within the API.
 - Users provides the required input, and the API returns a JSON response indicating the success or failure of the OCR process as well as an html result of the processed image .
 
 ### helper.py
@@ -42,9 +45,9 @@ Created a module server/modules/page/iitb_v0_ocr to have the endpoint for layout
 ### models.py
 - The purpose of this code is to define a clear and structured data model `OCRResponse` for representing the output of the OCR operation.
 
-In modules/page/__init__.py line 12 imported router from routes.py of the layout_preserve.
+In modules/apps/__init__.py line 10 imported router from routes.py of the layout_preserve.
 
-In app.py line 26 imported router of page.
+In app.py line 28 imported router of apps.
 
 ### Requirements
 

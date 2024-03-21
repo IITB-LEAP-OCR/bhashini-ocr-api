@@ -7,6 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from .modules.page import router as page_level_router
 from .modules.word import router as word_level_router
+from .modules.apps import router as apps_level_router
 
 app = FastAPI(
 	title='BHASHINI OCR API',
@@ -24,6 +25,7 @@ app.add_middleware(
 
 app.include_router(page_level_router)
 app.include_router(word_level_router)
+app.include_router(apps_level_router)
 
 
 @app.middleware('http')

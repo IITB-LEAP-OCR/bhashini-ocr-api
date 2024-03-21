@@ -8,7 +8,7 @@ import pickle
 import json
 
 router = APIRouter(
-	prefix='/ocr'
+	prefix='/page'
 )
 
 @router.post(
@@ -20,9 +20,9 @@ async def get_lpo(
     image: UploadFile = File(...),
     project_folder_name: str = Body(...),
     language: str = Body(...),
-    #equation: bool = Body(...),
-    #figure: bool = Body(...),
-    #table: bool = Body(...)
+    equation: bool = Body(...),
+    figure: bool = Body(...),
+    table: bool = Body(...)
     )-> OCRResponse:
     
     try:
@@ -35,17 +35,28 @@ async def get_lpo(
         
         save_uploaded_images([image],temp.name)
 
+        # Set layout_preservation based on equation, figure, and table
+        layout_preservation = equation or figure or table
+
+        print(f"Equation: {equation}, Figure: {figure}, Table: {table}, Layout Preservation: {layout_preservation}")
+
+        # If all three parameters are False, set them to True
+        if not equation and not figure and not table:
+            equation = figure = table = True
+            layout_preservation = True
+            print(f"Revised values: Equation: {equation}, Figure: {figure}, Table: {table}, Layout Preservation: {layout_preservation}")
+
 
         # Build configuration dictionary
         config = {
             "orig_pdf_path": os.path.join("data", image.filename),
             "project_folder_name": project_folder_name,
             "lang": language,
-            "equation": False,
-            "figure": False,
-            "table": False,
+            "equation": equation,
+            "figure": figure,
+            "table": table,
             "ocr_only": True,
-            "layout_preservation": False,
+            "layout_preservation": layout_preservation,
             "nested_ocr": False
         }
 
