@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from .attr.routes import router as attr_router
+from .attr import router as attr_router
 from .ocr import router as ocr_router
 
 router = APIRouter(

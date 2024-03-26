@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from .attr.routes import router as attr_router
+from .attr import router as attr_router
 from .textron.routes import router as textron_router
 
 router = APIRouter(

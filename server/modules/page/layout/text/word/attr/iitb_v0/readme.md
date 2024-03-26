@@ -1,4 +1,4 @@
-# Page Level Atrribute
+# IITB Text Attributes
 
 ## Style
 
