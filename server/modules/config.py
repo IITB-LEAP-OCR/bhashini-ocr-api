@@ -1,4 +1,5 @@
-IMAGE_FOLDER = '/home/ocrdev/ISHAN/Shourya_dkrimg/images'
+#IMAGE_FOLDER = '/home/ocrdev/ISHAN/Shourya_dkrimg/images'
+IMAGE_FOLDER = '/home/user/Public/Projects/IITB/images'
 
 import os
 try:

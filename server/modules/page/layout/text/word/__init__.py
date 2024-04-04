@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 
 from .attr import router as attr_router
-from .textron.routes import router as textron_router
+from .iitb_v0_textron.routes import router as textron_router
 
 router = APIRouter(
     prefix="/word"

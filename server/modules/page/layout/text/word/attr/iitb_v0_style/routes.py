@@ -48,14 +48,18 @@ async def get_font_properties_from_image(
 	
 	if task == TaskChoice.attributes:
 		with open(os.path.join(temp.name,"out.json")) as f:
+			print("path of out.json = ",os.path.join(temp.name,"out.json"))
 			out = json.load(f)
+		
 		response = FontAttributeImage.model_validate(out)
+
 	
 	else:
 		result_image = [os.path.join(temp.name,i) for i in os.listdir(os.path.join(temp.name)) if "result" in i][0]
-		print(result_image)
+		print("Result image path:", result_image)
 		img = cv2.imread(result_image)
 		res, im_png = cv2.imencode(".png", img)
+
 		response = Response(content=im_png.tobytes(),media_type="image/png")
 	
 	temp.cleanup()
