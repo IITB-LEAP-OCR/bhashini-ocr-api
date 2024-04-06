@@ -26,7 +26,7 @@ async def detect_table(images: List[UploadFile]):
         "--rm",
         "-v",
         f"{temp.name}:/model/data",
-        "page-layout"
+        "tabledockerizefinal"
     ]
     subprocess.call(docker_command)
     print("Done docker")
@@ -34,11 +34,21 @@ async def detect_table(images: List[UploadFile]):
     with open(os.path.join(temp.name, "out.json")) as f:
         out = json.load(f)
 
-    # Extract tables and cells from the output JSON
-    tables = out.get("tables", [])
-    cells = out.get("cells", [])
+        # Extract message and bboxes from out.json
+    message = out.get("message", "Table Detection Successful")
+    bboxes = out.get("bboxes", [])
 
-    return JSONResponse(content={"message": "Table Detection Successful", "layout": {"tables": tables, "cells": cells}})
+    # Check if table detection was unsuccessful (no bboxes detected)
+    if not bboxes:
+        message = "No table detected"
+
+    # Construct API response
+    response_content = {
+        "message": message,
+        "bboxes": bboxes
+    }
+
+    return JSONResponse(content=response_content)
 
 
 
