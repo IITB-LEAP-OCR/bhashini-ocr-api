@@ -1,4 +1,4 @@
-# BHASHINI OCR API - Layout Preservation
+# IITB Layout Preservation
 
 ## Description
 
@@ -8,9 +8,10 @@ An endpoint to return the OCR of an image has been integrated to the code. This 
 
 Created a module server/modules/page/iitb_v0_ocr to have the endpoint for layout preservation.
 
-**Layout preservation endpoint - page/ocr**
+### Layout preservation endpoint
+- **page/ocr**: Returns the HOCR of the input image.
 
-**Input:**
+### Input
 - An image file.
 - Output set name or document name to be given to final result folder in output directory.
 - Language to perform OCR.

@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 from fastapi import UploadFile
 
-class LayoutDetection(BaseModel):
+class TableDetection(BaseModel):
     """
     Pydantic model representing an uploaded file for layout detection.
     Attributes:

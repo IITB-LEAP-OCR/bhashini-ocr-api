@@ -1,4 +1,4 @@
-# BHASHINI OCR API - Layout Preservation
+# IITB Layout Preservation
 
 ## Description
 
@@ -8,9 +8,10 @@ An endpoint to return the OCR of an image has been integrated to the code. This 
 
 Created a module server/modules/apps/iitb_v0_ocr to have the endpoint for layout preservation.
 
-**Layout preservation endpoint - apps/ocr**
+### Layout preservation endpoint
+- **apps/ocr** : Returns HOCR of input image.
 
-**Input:**
+## Input
 - An image file.
 - Output set name or document name to be given to final result folder in output directory.
 - Language to perform OCR.
@@ -36,7 +37,7 @@ Created a module server/modules/apps/iitb_v0_ocr to have the endpoint for layout
 
 ### routes.py
 - The endpoint `apps/ocr` has been introduced to facilitate layout preservation across various classes within the API.
-- Users provides the required input, and the API returns a JSON response indicating the success or failure of the OCR process as well as an html result of the processed image .
+- Users provides the required input, and the API returns a JSON response indicating the success or failure of the OCR process as well as an html result of the processed image.
 
 ### helper.py
 - The `delete_files_in_directory` function is used to clear the contents of a directory before saving new files. 
