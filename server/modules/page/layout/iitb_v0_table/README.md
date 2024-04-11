@@ -10,6 +10,7 @@ Created a module server/modules/page/layout/iitb_v0_table to have the endpoint f
 
 ### Table Detection endpoint
 - **/api/v0/page/layout/table** : Returns coordinates of BBoxes of the tables.
+- **/api/v0/page/layout/table/visualize** : Returns annotated image displaying the detected tables.
 
 ### Input:
 - An image file.
@@ -21,6 +22,7 @@ Created a module server/modules/page/layout/iitb_v0_table to have the endpoint f
 
 **Response image**
 ![Response image](examples/Corp_Cir_01_ResponseImage.png)
+![Response image](examples/Corp_Cir_01_VisualResponseImage.png)
 
 ## Changes Made
 ### table_detection module
@@ -28,11 +30,13 @@ Created a module server/modules/page/layout/iitb_v0_table to have the endpoint f
 
 ### routes.py
 - Introduced `page/layout/table` as the primary endpoint for performing table detection.
+- Introduced `page/layout/table/visualize` to perform visualization of the detected bounding boxes of the table.
 - User inputs an images and a json response containing the success of table detection and bounding boxes for various tables is returned.
 
 ### helpers.py
 - The `delete_files_in_directory` function is used to clear the contents of a directory before saving new files. 
 - The `save_uploaded_images` function is implemented for saving uploaded images to a specified directory, replacing any existing files with the same names.
+- The `visualize_bounding_boxes` function is used to visualize detected bounding boxes on the input image. 
 
 ### models.py
 - The code snippet defines a Pydantic model named TableDetection, which is intended to represent an uploaded file for table detection. The purpose of this code is to create a structured way to handle uploaded files in FastAPI endpoints. 
