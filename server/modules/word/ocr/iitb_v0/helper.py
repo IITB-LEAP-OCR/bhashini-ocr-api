@@ -32,10 +32,6 @@ def process_image_content(image_content: str, savename: str) -> None:
 	assert isinstance(image_content, str)
 	with open(join(savefolder, savename), 'wb') as f:
 		f.write(base64.b64decode(image_content))
-	os.system('cp {} /home/ocr/ulca_images/{}.jpg'.format(
-		join(savefolder, savename),
-		str(uuid4())
-	))
 
 
 def process_image_url(image_url: str, savename: str) -> None:

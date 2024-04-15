@@ -72,7 +72,52 @@ Where,
   }
 }
 ```
-
+### Example 2
+#### Request
+```
+{
+	"image": [
+    	{
+        	"imageUri": "https://th.bing.com/th/id/OIP.oKLxx5IFrMQPNc56t1w75AAAAA?w=320&h=286&rs=1&pid=ImgDetMain",
+        	"imageContent": null
+    	}
+	],
+	"config": {
+    	"modelId": "your_model_id",
+    	"languages": [
+        	{
+            	"sourceLanguageName": "hindi",
+            	"sourceLanguage": "hi",
+            	"targetLanguage": null,
+            	"targetLanguageName": null
+        	}
+    	],
+    	"detectionLevel": "word",
+    	"modality": "printed"
+	}
+}
+```
+#### Response
+```
+{
+  "output": [
+    {
+      "source": "कर्म",
+      "target": "hi"
+    }
+  ],
+  "config": {
+    "detectionLevel": "page",
+    "modality": "printed",
+    "languages": [
+      {
+        "sourceLanguageName": "hindi",
+        "sourceLanguage": "hi"
+      }
+    ]
+  }
+}
+```
 
 ## Author
 - Name: Shourya Tyagi
