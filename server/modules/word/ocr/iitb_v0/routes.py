@@ -29,11 +29,9 @@ async def infer_ocr(
 
 	if modality=='handwritten':
 		check_output(['docker','run','--rm','--net','host','-v',f'{IMAGE_FOLDER}:/data','-v',f'{MODEL_FOLDER}:/models','-v',f'{MODEL_FOLDER}:/root/.cache/doctr/models',DOCKER_NAME,'python','infer.py','-l',lcode,'-t',modality])
-		# call(f'./infer_iitb_v2.sh {modality} {lcode} {IMAGE_FOLDER} {MODEL_FOLDER} {DOCKER_NAME}', shell=True)
 		ret = process_ocr_output(lcode, modality, IMAGE_FOLDER)
 		return ret
 	if modality=='printed':
 		check_output(['docker','run','--rm','--net','host','-v',f'{IMAGE_FOLDER}:/data','-v',f'{MODEL_FOLDER}:/models','-v',f'{MODEL_FOLDER}:/root/.cache/doctr/models',DOCKER_NAME,'python','infer.py','-l',lcode,'-t',modality])
-		# call(f'./infer_iitb_v2.sh {modality} {lcode} {IMAGE_FOLDER} {MODEL_FOLDER} {DOCKER_NAME}', shell=True)
 		ret = process_ocr_output(lcode, modality, IMAGE_FOLDER)
 		return ret
