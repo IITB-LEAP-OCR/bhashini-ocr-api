@@ -2,7 +2,7 @@ from ....config import IMAGE_FOLDER
 import os
 
 
-MODEL_FOLDER='/home/ocrdev/ISHAN/Shourya_dkrimg/models'
+MODEL_FOLDER='/home/ocrdev/ocr-api/temp_models'
 DOCKER_NAME="iitb-ocr"
 models_txt_path="/home/ocrdev/ISHAN/bhashini-ocr-api/server/modules/word/ocr/iitb_ocr_models.txt"
 
