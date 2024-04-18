@@ -33,111 +33,54 @@ def process_image_content(image_content: str, savename: str) -> None:
 	with open(join(savefolder, savename), 'wb') as f:
 		f.write(base64.b64decode(image_content))
 
-
-def process_image_url(image_url: str, savename: str) -> None:
-	"""
-	input the url of the image and download and saves the image inside the folder.
-	savename is the name of the image to be saved as
-	"""
-	print('received image as URL')
-	tmp = TemporaryDirectory(prefix='save_image')
-	savefolder = IMAGE_FOLDER
-	r = requests.get(image_url, stream=True)
-	print(r.status_code)
-	if r.status_code == 200:
-		r.raw.decode_content = True
-		img_path = join(tmp.name, 'image')
-		with open(img_path, 'wb') as f:
-			shutil.copyfileobj(r.raw, f)
-		img = Image.open(img_path)
-		if imghdr.what(img_path) == 'png':
-			img = img.convert('RGB')
-		img.save(join(savefolder, savename))
-		print('downloaded the image:', image_url)
-	else:
-		raise Exception('status_code is not 200 while downloading the image from url')
-
-def process_images(images: List[ImageFile]):
+def process_images(image_content):
 	"""
 	processes all the images in the given list.
-	it saves all the images in the /home/ocr/website/images folder and
-	returns this absolute path.
 	"""
 	print('deleting all the previous data from the images folder')
 	os.system(f'rm -rf {IMAGE_FOLDER}/*')
-	for idx, image in enumerate(images):
-		if image.imageContent is not None:
+	if image_content:
+		for idx, image_file in enumerate(image_content):
 			try:
-				process_image_content(image.imageContent, '{}.jpg'.format(idx))
+				process_image_content(image_file, '{}.jpg'.format(idx))
 			except:
 				raise HTTPException(
 					status_code=400,
 					detail='Error while decodeing and saving the image #{}'.format(idx)
 				)
-		elif image.imageUri is not None:
-			try:
-				process_image_url(image.imageUri, '{}.jpg'.format(idx))
-			except:
-				raise HTTPException(
-					status_code=400,
-					detail='Error while downloading and saving the image #{}'.format(idx)
-				)
-		else:
-			raise HTTPException(
-				status_code=400,
-				detail='image #{} doesnt contain either imageContent or imageUri'.format(
-					idx
-				)
-			)
+	else:
+		raise HTTPException(
+			status_code=400,
+			detail='Image Not Found'
+		)
 
-def process_config(config: OCRConfig):
+def process_config(config: OCRRequest):
 	global LANGUAGES
 	try:
-		language_code = config.languages[0].sourceLanguage.value
-		language = LANGUAGES[language_code]
+		language_code = config.language.value
 		modality = config.modality.value
-		dlevel = config.detectionLevel.value
 	except Exception as e:
 		print(e)
 		raise HTTPException(
 			status_code=400,
 			detail='language code is either not present or invalid'
 		)
-	return (language_code, language, modality, dlevel)
+	return (language_code, modality)
 
 
-def process_ocr_output(language_code: str,modality: str, image_folder: str) -> OCRResponse:
-	"""
-	process the ./images/out.json file and returns the ocr response.
-	"""
+def process_ocr_output(language_code: str, modality: str, image_folder: str) -> OCRResponse:
 	try:
-		a = open(os.path.join(image_folder,'out.json'), 'r').read().strip()
-		a = json.loads(a)
-		a = a.split('\n')
-		a = [Sentence(source=i,target=language_code) for i in a if len(i)>0]
-		
+		with open(os.path.join(image_folder, 'out.json'), 'r') as file:
+			data = json.load(file)
+
+		data = [i for i in data.split('\n') if len(i)>0]
+		response = OCRResponse(output=data, status=200)
+		print('ocr output :', response)
+
+	except FileNotFoundError:
+		response = OCRResponse(output=["File Not Found"], status=404)
+
 	except Exception as e:
-		print(e)
-		raise HTTPException(
-			status_code=500,
-			detail='Error while parsing the ocr output'
-		)
-	try:
-		response = OCRResponse(
-			config=OCRConfig(
-				modelId=None,
-				detectionLevel='page',
-				modality=modality,
-				languages=[LanguagePair(
-					sourceLanguageName=LANGUAGES[language_code],
-					sourceLanguage=language_code,
-					targetLanguage=None,
-					targetLanguageName=None,
-				)],
-			),
-			output=a.copy(),
-		)
-	except Exception as e:
-		print(f'OCRResponse ERROR: {e}')
+		response = OCRResponse(output=[e], status=500)  # Internal server error status
 
 	return response

@@ -25,32 +25,9 @@ Where,
 - Update the MODEL_FOLDER ,DOCKER_NAME, models_txt_path in config.py
 - URLs added in ocr-api: /api/v0/word/ocr
 
-## Examples 
-### Example 1
+## Example
 #### Request
-```
-{
-	"image": [
-    	{
-        	"imageUri": "https://th.bing.com/th/id/OIP.gQWZ1YqfVq1o20wGHSGMhwHaDt?w=346&h=175&c=7&r=0&o=5&pid=1.7",
-        	"imageContent": null
-    	}
-	],
-	"config": {
-    	"modelId": "your_model_id",
-    	"languages": [
-        	{
-            	"sourceLanguageName": "tamil",
-            	"sourceLanguage": "ta",
-            	"targetLanguage": null,
-            	"targetLanguageName": null
-        	}
-    	],
-    	"detectionLevel": "word",
-    	"modality": "printed"
-	}
-}
-```
+![swagger request](sample/bhashini_sample_word_ocr.png)
 #### Response
 ```
 {
@@ -72,53 +49,6 @@ Where,
   }
 }
 ```
-### Example 2
-#### Request
-```
-{
-	"image": [
-    	{
-        	"imageUri": "https://th.bing.com/th/id/OIP.oKLxx5IFrMQPNc56t1w75AAAAA?w=320&h=286&rs=1&pid=ImgDetMain",
-        	"imageContent": null
-    	}
-	],
-	"config": {
-    	"modelId": "your_model_id",
-    	"languages": [
-        	{
-            	"sourceLanguageName": "hindi",
-            	"sourceLanguage": "hi",
-            	"targetLanguage": null,
-            	"targetLanguageName": null
-        	}
-    	],
-    	"detectionLevel": "word",
-    	"modality": "printed"
-	}
-}
-```
-#### Response
-```
-{
-  "output": [
-    {
-      "source": "कर्म",
-      "target": "hi"
-    }
-  ],
-  "config": {
-    "detectionLevel": "page",
-    "modality": "printed",
-    "languages": [
-      {
-        "sourceLanguageName": "hindi",
-        "sourceLanguage": "hi"
-      }
-    ]
-  }
-}
-```
-
 ## Author
 - Name: Shourya Tyagi
 - Email: shouryatyagi222@gmail.com
