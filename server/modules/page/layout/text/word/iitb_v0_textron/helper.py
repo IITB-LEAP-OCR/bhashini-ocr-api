@@ -19,26 +19,8 @@ def logtime(t: float, msg:  str) -> None:
 
 t = time.time()
 
-def run_docker():
-    check_output(['docker','run','--rm','--net','host','-v',f'{IMAGE_FOLDER}:/data',docker_image_name])
-
-def save_uploaded_image(image: UploadFile) -> str:
-	"""
-	function to save the uploaded image to the disk
-
-	@returns the absolute location of the saved image
-	"""
-	t = time.time()
-	print('removing all the previous uploaded files from the image folder')
-	os.system(f'rm -rf {IMAGE_FOLDER}/*')
-	location = join(IMAGE_FOLDER, '{}.{}'.format(
-		str(uuid.uuid4()),
-		image.filename.strip().split('.')[-1]
-	))
-	with open(location, 'wb+') as f:
-		shutil.copyfileobj(image.file, f)
-	logtime(t, 'Time took to save one image')
-	return location
+def run_docker(image_folder):
+    check_output(['docker','run','--rm','--net','host','-v',f'{image_folder}:/data',docker_image_name])
 
 def convert_geometry_to_bbox(
 	geometry: Tuple[Tuple[float, float], Tuple[float, float]],
@@ -64,8 +46,8 @@ def convert_geometry_to_bbox(
 
 def process_textron_output(folder_path: str) -> List[LayoutImageResponse]:
     try:
-        run_docker()
-        a = open(IMAGE_FOLDER+'/out.json', 'r').read().strip()
+        run_docker(folder_path)
+        a = open(folder_path+'/out.json', 'r').read().strip()
         a = json.loads(a)
         ret=[]
         for page in a.keys():
@@ -90,8 +72,8 @@ def process_textron_output(folder_path: str) -> List[LayoutImageResponse]:
         print(e)
 
 def textron_visualize(image_path: str) -> List[Region]:
-    run_docker()
-    a = open(IMAGE_FOLDER+'/out.json', 'r').read().strip()
+    run_docker(image_path)
+    a = open(image_path+'/out.json', 'r').read().strip()
     a = json.loads(a)
     for page in a.keys():
         regions=[]

@@ -1,21 +1,16 @@
-from ....config import IMAGE_FOLDER
 import os
-
 
 MODEL_FOLDER='/home/ocrdev/ocr-api/temp_models'
 DOCKER_NAME="iitb-ocr"
-models_txt_path="/home/ocrdev/ISHAN/bhashini-ocr-api/server/modules/word/ocr/iitb_ocr_models.txt"
+models_txt_path="./bhashini-ocr-api/server/modules/word/ocr/iitb_ocr_models.txt"
 
-if not os.path.exists(MODEL_FOLDER):
-	os.mkdir(MODEL_FOLDER)
 	
 try:
-	if not os.path.exists(IMAGE_FOLDER):
-		os.mkdir(IMAGE_FOLDER)
 	if not os.path.exists(MODEL_FOLDER):
 		os.mkdir(MODEL_FOLDER)
 except Exception as e:
 	print('Error :',e)
+	print('Update the Path to the IITB Word OCR Models Folder in ./bhashini-ocr-api/server/modules/word/ocr/iitb_v0/config.py')
 
 LANGUAGES = {
 	'en': 'english',

@@ -1,3 +1,1 @@
-from ......config import *
-
-docker_image_name= "shouryatyagi222/textron:1"
+docker_image_name= "layout-word-textron"

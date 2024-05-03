@@ -22,27 +22,26 @@ from .config import *
 def download_models_from_file(file_path, output_folder):
     call(f'wget -i {file_path} -P {output_folder}',shell=True)
 
-def process_image_content(image_content: str, savename: str) -> None:
+def process_image_content(image_content: str, savename: str, savefolder: str) -> None:
 	"""
 	input the base64 encoded image and saves the image inside the folder.
 	savename is the name of the image to be saved as
 	"""
 	print('received image as base64')
-	savefolder = IMAGE_FOLDER
 	assert isinstance(image_content, str)
 	with open(join(savefolder, savename), 'wb') as f:
 		f.write(base64.b64decode(image_content))
 
-def process_images(image_content):
+def process_images(image_content, image_folder):
 	"""
 	processes all the images in the given list.
 	"""
 	print('deleting all the previous data from the images folder')
-	os.system(f'rm -rf {IMAGE_FOLDER}/*')
+	os.system(f'rm -rf {image_folder}/*')
 	if image_content:
 		for idx, image_file in enumerate(image_content):
 			try:
-				process_image_content(image_file, '{}.jpg'.format(idx))
+				process_image_content(image_file, '{}.jpg'.format(idx), image_folder)
 			except:
 				raise HTTPException(
 					status_code=400,

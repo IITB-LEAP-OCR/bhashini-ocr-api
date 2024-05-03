@@ -1,9 +1,11 @@
 import uuid
 from typing import List
 
+import io
 import cv2
 from fastapi import APIRouter, Depends, File, Form, UploadFile
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, StreamingResponse
+from tempfile import TemporaryDirectory
 
 from .dependencies import save_uploaded_images
 from .models import *
@@ -16,17 +18,20 @@ router = APIRouter(
 
 @router.post('/', response_model=List[LayoutImageResponse])
 async def text_detection(
-	folder_path: str = Depends(save_uploaded_images),
+	image: UploadFile = File(...),
 	model: ModelChoice = Form(ModelChoice.textron),
 ):
 	"""
 	API endpoint for calling the textron text detection
 	"""
+	temp = TemporaryDirectory()
+	print(f"orig_pdf_path.filename: {image.filename}")
+	print(f"temp.name: {temp.name}")
+	save_uploaded_images([image],temp.name)
+
 	print(model.value)
 	if model == ModelChoice.textron:
-		ret = process_textron_output(folder_path)
-	# if dilate:
-	# 	ret = process_multiple_dilate(ret)
+		ret = process_textron_output(temp.name)
 	return ret
 
 
@@ -38,23 +43,21 @@ async def text_detection_visualization(
 	"""
 	API endpoint for calling the textron text detection Visualzation
 	"""
-	image_path = save_uploaded_image(image)
+	temp = TemporaryDirectory()
+	print(f"orig_pdf_path.filename: {image.filename}")
+	print(f"temp.name: {temp.name}")
+	image_path = save_uploaded_images([image],temp.name)
 	print(model.value)
 	print(image_path)
 	if model == ModelChoice.textron:
-		regions = textron_visualize(image_path)
+		regions = textron_visualize(temp.name)
 
-	# if dilate:
-	# 	regions = process_dilate(regions, image_path)
-	save_location = '{}/{}.jpg'.format(
-		IMAGE_FOLDER,str(uuid.uuid4())
-	)
-	# TODO: all the lines after this can be transfered to the helper.py file
 	bboxes = [i.bounding_box for i in regions]
 	bboxes = [((i.x, i.y), (i.x+i.w, i.y+i.h)) for i in bboxes]
 	img = cv2.imread(image_path)
 	count = 1
 	for i in bboxes:
 		img = cv2.rectangle(img, i[0], i[1], (0,0,255), 2)
-	cv2.imwrite(save_location, img)
-	return FileResponse(save_location)
+	cv2.imwrite(image_path, img)
+	with open(image_path, mode="rb") as img_file:
+		return StreamingResponse(io.BytesIO(img_file.read()), media_type="image/jpeg")
