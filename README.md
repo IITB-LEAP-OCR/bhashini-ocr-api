@@ -14,6 +14,11 @@ This is an API that combines the functionalities of Layout Parsing and OCR provi
 | /word/ocr  | Robust Hindi OCR |
 | /apps/page |  Layout Preserving OCR  |
 
+## Resources
+1. [API Documentation](https://docs.google.com/document/d/1n6hQ8GsPeaaBxNYfzmjgeI_tuNJTxnx9c9cVD-RD3Uw/edit?usp=sharing)
+2. [Testing Report](https://docs.google.com/document/d/1wx_iKTE1Knd6Os95OrVe0fog2Nma8TZq7kSvstC9moA/edit?usp=sharing)
+   
+
 ## Getting Started
 1. Clone the repository to local system
    ```
