@@ -6,12 +6,12 @@ This is an API that combines the functionalities of Layout Parsing and OCR provi
 
 | End Point  | Technical Details |
 | :---: | :---: |
-| /page/ocr  | Tesseract  |
-| /page/layout/table |  Table Detection FRCNN Model  |
-| /page/layout/text/word | TEXTRON |
-| /page/layout/text/word/attr/style |  Font name and style  |
-| /word/ocr  | Robust Hindi Model |
+| /page/layout/table |  Table Detection  |
+| /page/layout/text/word | TEXTRON (Text Detection) |
+| /page/layout/text/word/attr/style |  Text Attribute Detection  |
 | /word/attr/script |  Script Detection  |
+| /page/ocr  | OCR using Tesseract |
+| /word/ocr  | Robust Hindi OCR |
 | /apps/page |  Layout Preserving OCR  |
 
 ## Getting Started
