@@ -3,7 +3,7 @@ import shutil
 from os.path import join
 from fastapi import UploadFile
 from typing import List
-
+import cv2
 
 def delete_files_in_directory(directory_path):
     try:
@@ -25,3 +25,17 @@ def save_uploaded_images(images: List[UploadFile],image_dir) -> str:
 		with open(location, 'wb') as f:
 			shutil.copyfileobj(image.file, f)
 	return image_dir
+
+# Function to visualize detected bounding boxes on the input image
+def visualize_bounding_boxes(image_path: str, bboxes: list):
+    image = cv2.imread(image_path)
+    if image is None:
+        print("Error: Unable to read the input image.")
+        return None
+
+    for bbox in bboxes:
+        x1, y1, x2, y2 = bbox[0], bbox[1], bbox[2], bbox[3]
+        print("Bounding Box Coordinates:", x1, y1, x2, y2)
+        cv2.rectangle(image, (x1, y1), (x2, y2), (0, 255, 128), 1)
+
+    return image
