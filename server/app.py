@@ -11,8 +11,8 @@ from .modules.apps import router as apps_level_router
 
 app = FastAPI(
 	title='BHASHINI OCR API',
-	docs_url='/api/v0/docs',
-	openapi_url='/api/v0/openapi.json'
+	docs_url='/api/v1/docs',
+	openapi_url='/api/v1/openapi.json'
 )
 
 app.add_middleware(
