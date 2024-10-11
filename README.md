@@ -10,9 +10,10 @@ This is an API that combines the functionalities of Layout Parsing and OCR provi
 | /page/layout/text/word | TEXTRON (Text Detection) |
 | /page/layout/text/word/attr/style |  Text Attribute Detection  |
 | /word/attr/script |  Script Detection  |
-| /page/ocr  | OCR using Tesseract |
+| /page/ocr  | Plain Text OCR using Tesseract |
 | /word/ocr  | Robust Hindi OCR |
-| /apps/page |  Layout Preserving OCR  |
+| /apps/page/lpo |  Layout Preserving OCR with Text, Tables and Figures  |
+| /apps/page/reconstruct |  Page OCR with Text and Tables  |
 
 ## Resources
 1. [API Documentation](https://docs.google.com/document/d/1n6hQ8GsPeaaBxNYfzmjgeI_tuNJTxnx9c9cVD-RD3Uw/edit?usp=sharing)
@@ -22,7 +23,7 @@ This is an API that combines the functionalities of Layout Parsing and OCR provi
 ## Getting Started
 1. Clone the repository to local system
    ```
-   git clone -b version-0 https://github.com/IITB-LEAP-OCR/bhashini-ocr-api.git
+   git clone -b version-1 https://github.com/IITB-LEAP-OCR/bhashini-ocr-api.git
    ```
 2. Create a python3 virtualenv and activate it
    ```
