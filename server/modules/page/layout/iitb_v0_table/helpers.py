@@ -35,7 +35,7 @@ def visualize_bounding_boxes(image_path: str, bboxes: list):
         return None
 
     for bbox in bboxes:
-        x1, y1, x2, y2 = bbox
+        x1, y1, x2, y2 = int(bbox[0]), int(bbox[1]), int(bbox[2]), int(bbox[3])
         print("Bounding Box Coordinates:", x1, y1, x2, y2)
         cv2.rectangle(image, (x1, y1), (x2, y2), (0, 255, 0), 2)
 

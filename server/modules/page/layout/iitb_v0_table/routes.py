@@ -7,6 +7,8 @@ import cv2
 from fastapi import APIRouter, UploadFile, Depends, File, Form
 from fastapi.responses import JSONResponse, FileResponse, StreamingResponse
 from tempfile import TemporaryDirectory
+from enum import Enum
+import ast
 
 from .helpers import save_uploaded_images, visualize_bounding_boxes
 
@@ -14,65 +16,83 @@ router = APIRouter(
 	prefix='/table'
 )
 
+class Choice(str, Enum):
+    frcnn = "frcnn"
+    yolo = "yolo"
+
+
+def get_bboxes_from_model_choice(choice, temp, images):
+    bboxes = []
+    if choice == Choice.frcnn:
+        print("Calling frcnn docker")
+        docker_command = [
+            "docker",
+            "run",
+            "--rm",
+            "-v",
+            f"{temp.name}:/model/data",
+            "tabledockerizefinal"
+        ]
+        subprocess.call(docker_command)
+        print("Done docker")
+
+        with open(os.path.join(temp.name, "out.json")) as f:
+            out = json.load(f)
+
+        bboxes = out.get("bboxes", [])
+    else:
+        print("Calling yolo docker")
+        image = images[0]
+        cmd = f"docker run --rm --gpus all -it -v {temp.name}/{image.filename}:/docker/uploads/{image.filename} tablecalls uploads/{image.filename} td True > temp.txt"
+        os.system(cmd)
+        fp = open('temp.txt', 'r')
+        lines = fp.readlines()
+        result = lines[-1]
+        bboxes = ast.literal_eval(result)
+        print(bboxes)
+        print("Done docker")
+    return bboxes
+
+
 
 @router.post("")
-async def detect_table(images: List[UploadFile]):
+async def detect_table(
+    images: List[UploadFile],
+    model: Choice = Form(Choice.frcnn)
+    ):
     temp = TemporaryDirectory()
     image_path = save_uploaded_images(images, temp.name)
+    print(model)
 
-    print("Calling docker")
-    docker_command = [
-        "docker",
-        "run",
-        "--rm",
-        "-v",
-        f"{temp.name}:/model/data",
-        "tabledockerizefinal"
-    ]
-    subprocess.call(docker_command)
-    print("Done docker")
-
-    with open(os.path.join(temp.name, "out.json")) as f:
-        out = json.load(f)
-
-    # Extract message and bboxes from out.json
-    message = out.get("message", "Table Detection Successful")
-    bboxes = out.get("bboxes", [])
+    bboxes = get_bboxes_from_model_choice(model, temp, images)
 
     # Check if table detection was unsuccessful (no bboxes detected)
     if not bboxes:
-        message = "No table detected"
+        response_content = {
+            "message": 'No Tables Detected',
+            "bboxes": []
+        }
 
-    # Construct API response
-    response_content = {
-        "message": message,
-        "bboxes": bboxes
-    }
+    else:
+        # Construct API response
+        response_content = {
+            "message": 'Table Detection Successful',
+            "bboxes": bboxes
+        }
 
     return JSONResponse(content=response_content)
 
 
 @router.post("/visualize")
-async def visualize_tables(images: List[UploadFile]):
+async def visualize_tables(
+    images: List[UploadFile],
+    model: Choice = Form(Choice.frcnn)
+    ):
     temp = TemporaryDirectory()
     image_path = save_uploaded_images(images, temp.name)
     print("Image Path:", image_path)
-
-    # Invoke Docker container for table detection
-    docker_command = [
-        "docker",
-        "run",
-        "--rm",
-        "-v",
-        f"{temp.name}:/model/data",
-        "tabledockerizefinal"
-    ]
-    subprocess.call(docker_command)
-
-    # Load detected bounding boxes from the output JSON file
-    with open(os.path.join(temp.name, "out.json")) as f:
-        out = json.load(f)
-        bboxes = out.get("bboxes", [])
+    print(model)
+    bboxes = get_bboxes_from_model_choice(model, temp, images)
 
     # Visualize bounding boxes on the input image
     annotated_image = visualize_bounding_boxes(os.path.join(image_path, images[0].filename), bboxes)
