@@ -16,7 +16,7 @@ router = APIRouter(
         response_model=OCRResponse,
         response_model_exclude_none=True)
 
-async def get_lpo(
+async def get_page_ocr(
     image: UploadFile = File(...),
     project_folder_name: str = Body(...),
     language: str = Body(...),

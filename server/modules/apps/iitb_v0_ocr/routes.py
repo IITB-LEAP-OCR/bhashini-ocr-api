@@ -12,8 +12,8 @@ router = APIRouter(
 )
 
 @router.post(
-        '',
-        response_model=OCRResponse,
+        '/lpo',
+        response_model = OCRResponse,
         response_model_exclude_none=True)
 
 async def get_lpo(
@@ -89,3 +89,37 @@ async def get_lpo(
     finally:
         # Clean up the temporary directory
         temp.cleanup()
+
+
+@router.post(
+        '/reconstruct',
+        response_model = OCRResponse,
+        response_model_exclude_none = True)
+
+async def get_table_text_ocr(
+    image: UploadFile = File(...),
+    )-> OCRResponse:
+    
+    try:
+        # Create a temporary directory
+        temp = TemporaryDirectory()
+        print(f"orig_path.filename: {image.filename}")
+        print(f"temp.name: {temp.name}")
+        save_uploaded_images([image],temp.name)
+        print("Calling docker")
+        cmd = f"docker run --rm --gpus all -it -v {temp.name}/{image.filename}:/docker/uploads/{image.filename} tablecalls uploads/{image.filename} tr True > temp.txt"
+        os.system(cmd)
+        fp = open('temp.txt', 'r')
+        lines = fp.readlines()
+        full_logs = ''.join(lines)
+        start = full_logs.find('<?xml version="1.0" encoding="UTF-8"?>')
+        html = full_logs[start:]
+        print("Done docker")
+        return OCRResponse(result_message = f'OCR SUCCESSFUL', result_html = html)
+    except Exception as e:
+        # If an exception occurs, return an OCRResponse with an error message
+        return OCRResponse(result_message = f'OCR FAILED: {str(e)}', result_html='')
+    finally:
+        # Clean up the temporary directory
+        temp.cleanup()
+        os.system('rm temp.txt')
