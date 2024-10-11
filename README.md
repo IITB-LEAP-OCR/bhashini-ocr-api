@@ -1,4 +1,4 @@
-# Bhashini OCR API (version-0)
+# Bhashini OCR API (version-1)
 
 ## Description
 
@@ -37,4 +37,4 @@ This is an API that combines the functionalities of Layout Parsing and OCR provi
    ```
     python3 main.py
    ```
-5. To access the swagger UI redirect to http://0.0.0.0:8058/api/v0/docs
+5. To access the swagger UI redirect to http://0.0.0.0:8058/api/v1/docs
