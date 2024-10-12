@@ -7,11 +7,12 @@ This is an API that combines the functionalities of Layout Parsing and OCR provi
 | API Level | End Point  | Technical Details |
 | :---: | :---: | :---: |
 | page | /page/layout/table |  Table Detection  |
-| page | /page/layout/text/word | TEXTRON (Text Detection) |
+| page | /page/layout/text/word | Text Detection (TEXTRON) |
 | page | /page/layout/text/word/attr/style |  Text Attribute Detection  |
 | page | /page/ocr  | Plain Text OCR using Tesseract |
 | word | /word/attr/script |  Script Detection for given word image  |
 | word | /word/ocr  | Robust Hindi Word-level OCR |
+| apps | /apps/table |  Table Structure Recognition (SPRINT) |
 | apps | /apps/page/lpo |  Layout Preserving OCR with Text, Tables, Figures  |
 | apps | /apps/page/reconstruct |  Page OCR with Text and Tables  |
 
