@@ -53,7 +53,7 @@ def process_textron_output(folder_path: str) -> List[LayoutImageResponse]:
         for page in a.keys():
             regions=[]
             for bbox in a[page]:
-                regions.append(
+                regions.insert(0,
                     Region.from_bounding_box(
                         BoundingBox(x=int(bbox['x']),y=int(bbox['y']),w=int(bbox['w']),h=int(bbox['h']),
                             label=bbox['label'],
@@ -78,7 +78,7 @@ def textron_visualize(image_path: str) -> List[Region]:
     for page in a.keys():
         regions=[]
         for bbox in a[page]:
-            regions.append(
+            regions.insert(0,
                 Region.from_bounding_box(
                     BoundingBox(x=int(bbox['x']),y=int(bbox['y']),w=int(bbox['w']),h=int(bbox['h']),
                         label=bbox['label'],
